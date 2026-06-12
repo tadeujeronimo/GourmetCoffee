@@ -1,28 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { Modal, Button } from 'react-bootstrap';
-import { getMenuOptions } from '../../services/menuOptionsService';
-import { createOrder } from '../../services/orderService';
+import React, { useState, useEffect } from "react";
+import { Modal, Button } from "react-bootstrap";
+import { getMenuOptions } from "../../services/menuOptionsService";
+import { createOrder } from "../../services/orderService";
 
-import './Pedidos.css';
+import "./Pedidos.css";
 
 function Pedidos() {
   const [pedido, setPedido] = useState({
-    nomeCliente: '',
+    nomeCliente: "",
     itens: [],
-    formaPagamento: '',
-    tipoPedido: '',
-    rua: '',
-    numero: '',
-    bairro: '',
+    formaPagamento: "",
+    tipoPedido: "",
+    rua: "",
+    numero: "",
+    bairro: "",
     precisaTroco: false,
-    trocoPara: '',
-    observacoes: '',
+    trocoPara: "",
+    observacoes: "",
   });
 
   const [menuItems, setMenuItems] = useState({});
   const [showModal, setShowModal] = useState(false);
-  const [categoriaAtual, setCategoriaAtual] = useState('');
-  const [itemAtual, setItemAtual] = useState('');
+  const [categoriaAtual, setCategoriaAtual] = useState("");
+  const [itemAtual, setItemAtual] = useState("");
   const [quantidadeAtual, setQuantidadeAtual] = useState(1);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ function Pedidos() {
         const data = await getMenuOptions();
         setMenuItems(data);
       } catch (error) {
-        console.error('Erro ao buscar itens do menu:', error);
+        console.error("Erro ao buscar itens do menu:", error);
       }
     }
 
@@ -40,14 +40,14 @@ function Pedidos() {
 
   const handleCategoriaClick = (categoria) => {
     setCategoriaAtual(categoria);
-    setItemAtual('');
+    setItemAtual("");
     setQuantidadeAtual(1);
     setShowModal(true);
   };
 
   const handleAdicionarItem = () => {
     if (!itemAtual || quantidadeAtual <= 0) {
-      alert('Selecione um item válido.');
+      alert("Selecione um item válido.");
       return;
     }
 
@@ -76,26 +76,26 @@ function Pedidos() {
     return itens.reduce((acc, item) => acc + item.preco * item.quantidade, 0);
   };
 
-  const handleSubmit = async (e)  => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!pedido.formaPagamento || !pedido.tipoPedido) {
-      alert('Preencha pagamento e tipo de pedido.');
+      alert("Preencha pagamento e tipo de pedido.");
       return;
     }
 
     if (
-      pedido.formaPagamento === 'dinheiro' &&
+      pedido.formaPagamento === "dinheiro" &&
       pedido.precisaTroco &&
       !pedido.trocoPara
     ) {
-      alert('Informe o valor para troco.');
+      alert("Informe o valor para troco.");
       return;
     }
 
-    if (pedido.tipoPedido === 'entrega') {
+    if (pedido.tipoPedido === "entrega") {
       if (!pedido.rua || !pedido.numero || !pedido.bairro) {
-        alert('Preencha o endereço completo.');
+        alert("Preencha o endereço completo.");
         return;
       }
     }
@@ -108,22 +108,22 @@ function Pedidos() {
     try {
       await createOrder(pedidoCorrigido);
 
-      alert('Pedido enviado com sucesso!');
+      alert("Pedido enviado com sucesso!");
 
       setPedido({
-        nomeCliente: '',
+        nomeCliente: "",
         itens: [],
-        formaPagamento: '',
-        tipoPedido: '',
-        rua: '',
-        numero: '',
-        bairro: '',
+        formaPagamento: "",
+        tipoPedido: "",
+        rua: "",
+        numero: "",
+        bairro: "",
         precisaTroco: false,
-        trocoPara: '',
-        observacoes: '',
+        trocoPara: "",
+        observacoes: "",
       });
     } catch (error) {
-      console.error('Erro ao enviar pedido:', error);
+      console.error("Erro ao enviar pedido:", error);
     }
   };
 
@@ -159,24 +159,41 @@ function Pedidos() {
             <option value="credito">Crédito</option>
           </select>
         </div>
-        {pedido.formaPagamento === 'dinheiro' && (
+        {pedido.formaPagamento === "dinheiro" && (
           <>
             <div className="form-group">
               <label>Precisa de troco?</label>
-              <select
-                value={pedido.precisaTroco}
-                onChange={(e) =>
-                  setPedido({
-                    ...pedido,
-                    precisaTroco: e.target.value === 'true',
-                    trocoPara:
-                      e.target.value === 'true' ? pedido.trocoPara : '',
-                  })
-                }
-              >
-                <option value="false">Não</option>
-                <option value="true">Sim</option>
-              </select>
+              <div className="troco-options">
+                  <label>
+                  <input
+                    type="radio"
+                    name="precisaTroco"
+                    checked={pedido.precisaTroco}
+                    onChange={() =>
+                      setPedido({
+                        ...pedido,
+                        precisaTroco: true,
+                      })
+                    }
+                  />
+                  Sim
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="precisaTroco"
+                    checked={!pedido.precisaTroco}
+                    onChange={() =>
+                      setPedido({
+                        ...pedido,
+                        precisaTroco: false,
+                        trocoPara: "",
+                      })
+                    }
+                  />
+                  Não
+                </label>
+              </div>
             </div>
             {pedido.precisaTroco && (
               <div className="form-group">
@@ -188,7 +205,7 @@ function Pedidos() {
                     setPedido({
                       ...pedido,
                       trocoPara:
-                        e.target.value === '' ? '' : Number(e.target.value),
+                        e.target.value === "" ? "" : Number(e.target.value),
                     })
                   }
                 />
@@ -210,7 +227,7 @@ function Pedidos() {
             <option value="entrega">Entrega</option>
           </select>
         </div>
-        {pedido.tipoPedido === 'entrega' && (
+        {pedido.tipoPedido === "entrega" && (
           <>
             <div className="form-group">
               <label>Rua:</label>
@@ -249,6 +266,7 @@ function Pedidos() {
             onChange={(e) =>
               setPedido({ ...pedido, observacoes: e.target.value })
             }
+            className="textarea"
           />
         </div>
         <div className="menu-category-list">
@@ -269,7 +287,7 @@ function Pedidos() {
             <ul>
               {pedido.itens.map((item, index) => (
                 <li key={index}>
-                  {item.nome} ({item.categoria}) x{item.quantidade} - R${' '}
+                  {item.nome} ({item.categoria}) x{item.quantidade} - R${" "}
                   {(item.preco * item.quantidade).toFixed(2)}
                   <button
                     type="button"
