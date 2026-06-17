@@ -4,32 +4,42 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
     "dev": "nodemon server.js",
+    "start": "node server.js",
+    "swagger": "node swagger.js",
+    "postinstall": "prisma generate",
+    "vercel-build": "prisma generate",
     "test": "jest --runInBand --forceExit",
     "test:watch": "jest --watchAll --runInBand"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "testMatch": ["**/tests/**/*.test.js"]
   },
   "prisma": {
     "seed": "node prisma/seed.js"
   },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setup.js"
+    ],
+    "testEnvironment": "node",
+    "testMatch": ["**/tests/**/*.test.js"]
+  },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@prisma/client": "^6.15.0",
     "@vercel/blob": "^0.27.1",
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.3",
     "multer": "^2.1.1",
-    "prisma": "^6.15.0"
+    "prisma": "^6.15.0",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.0"
   },
   "devDependencies": {
-    "jest": "^29.7.0",
+    "fast-check": "^4.8.0",
+    "jest": "^30.4.2",
     "nodemon": "^3.1.10",
     "supertest": "^7.0.0"
   }
