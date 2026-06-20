@@ -1,20 +1,15 @@
 {
-  "$schema": "https://vercel.sh",
   "version": 2,
   "functions": {
-    "app.js": {
-      "includeFiles": [
-        "swagger.json",
-        "prisma/**",
-        "src/**",
-        "node_modules/swagger-ui-dist/**"
-      ]
+    "index.js": {
+      "includeFiles": "swagger.json|prisma/**|src/**|node_modules/swagger-ui-dist/**"
     }
   },
-  "rewrites": [
+  "git": { "deploymentEnabled": false },
+  "routes": [
     {
-      "source": "/(.*)",
-      "destination": "/app.js"
+      "src": "/(.*)",
+      "dest": "/index.js"
     }
   ]
 }
