@@ -45,10 +45,6 @@ jobs:
       contents: read
       deployments: write
 
-    defaults:
-      run:
-        working-directory: front
-        
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_FRONT }}
@@ -62,18 +58,23 @@ jobs:
           node-version: 20
           cache: npm
           cache-dependency-path: front/package-lock.json
-      
+
+      # 1. Entramos na pasta para instalar as dependências localmente do front
       - name: Install dependencies
-        run: npm ci
+        run: cd front && npm ci
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
+      # 2. O Pull precisa saber onde estão as configurações locais do projeto do front
       - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }} --cwd front
+        
+      # 3. O Actions faz o build dentro da pasta correta
+      - name: Build Project Artifacts locally
+        run: cd front && npm run build
 
-      - name: Build Project Artifacts
-        run: npm run build
-
+      # 4. O Deploy roda na RAIZ. Ele lê a pasta .vercel gerada na raiz/front e deixa
+      # que a Vercel use o Root Directory "front" configurado no painel deles.
       - name: Deploy Project Artifacts to Vercel
         run: vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
