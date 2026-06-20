@@ -37,12 +37,17 @@ jobs:
         run: npm test -- --watchAll=false --passWithNoTests
 
   deploy:
-    name: Deploy to Vercel
+    name: Deploy Frontend to Vercel
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      deployments: write
-    needs: test # só faz deploy se os testes passarem
+    needs: test # só faz deploy se os testes passarem 
+
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_FRONT }}
+
+    defaults:
+      run:
+        working-directory: front
 
     steps:
       - uses: actions/checkout@v4
@@ -54,16 +59,17 @@ jobs:
           cache: npm
           cache-dependency-path: front/package-lock.json
 
-      - name: Deploy to Vercel (action)
-        uses: amondnet/vercel-action@v42
-        id: vercel_deploy_front
-        with:
-          github-token: ${{ github.token }}
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_FRONT }}
-          vercel-build: true
-          target: production
-          github-deployment-environment: production
-          github-deployment: true
-          working-directory: ./front
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project Artifacts
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
