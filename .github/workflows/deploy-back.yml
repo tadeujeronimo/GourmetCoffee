@@ -59,10 +59,10 @@ jobs:
       - name: Run tests
         run: npm test -- --passWithNoTests
 
-    deploy:
-      name: Deploy Backend to Vercel
-      runs-on: ubuntu-latest
-      needs: test
+  deploy:
+    name: Deploy Backend to Vercel
+    runs-on: ubuntu-latest
+    needs: test
 
     permissions:
       contents: read
@@ -86,11 +86,12 @@ jobs:
             cache: npm
             cache-dependency-path: back/package-lock.json
 
-        # Instalamos o Vercel CLI localmente no projeto para o NPM não se perder
+        - name: Install dependencies
+          run: npm ci
+
         - name: Install Vercel CLI
           run: npm install vercel
 
-        # Chamamos o CLI usando npx para garantir o escopo correto da pasta
         - name: Pull Vercel environment
           run: npx vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
