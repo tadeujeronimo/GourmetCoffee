@@ -66,7 +66,7 @@ jobs:
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }} --cwd front
 
       - name: Build project
-        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }} --cwd front
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy (prebuilt)
-        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }} --cwd front
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
