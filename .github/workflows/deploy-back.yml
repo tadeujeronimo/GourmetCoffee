@@ -88,4 +88,3 @@ jobs:
           vercel-build: true
           target: production
           github-deployment-environment: production
-          github-deployment: true

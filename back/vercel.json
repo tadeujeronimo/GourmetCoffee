@@ -1,10 +1,19 @@
 {
   "version": 2,
-  "functions": {
-    "index.js": {
-      "includeFiles": "swagger.json|prisma/**|src/**|node_modules/swagger-ui-dist/**"
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "swagger.json",
+          "prisma/**",
+          "src/**",
+          "node_modules/swagger-ui-dist/**"
+        ]
+      }
     }
-  },
+  ],
   "git": { "deploymentEnabled": false },
   "routes": [
     {
