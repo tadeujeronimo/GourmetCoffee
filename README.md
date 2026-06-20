@@ -3,6 +3,7 @@
 [![CI](https://github.com/tadeujeronimo/GourmetCoffee/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/tadeujeronimo/GourmetCoffee/actions/workflows/ci.yml)
 [![Deploy Front](https://github.com/tadeujeronimo/GourmetCoffee/actions/workflows/deploy-front.yml/badge.svg?branch=main)](https://github.com/tadeujeronimo/GourmetCoffee/actions/workflows/deploy-front.yml)
 [![Deploy Back](https://github.com/tadeujeronimo/GourmetCoffee/actions/workflows/deploy-back.yml/badge.svg?branch=main)](https://github.com/tadeujeronimo/GourmetCoffee/actions/workflows/deploy-back.yml)
+
 Projeto web de uma cafeteria, com backend em Node.js/Express, frontend em React e banco de dados PostgreSQL gerenciado com Prisma.
 
 ---
