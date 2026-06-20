@@ -197,8 +197,8 @@ Os arquivos `vercel.json` em `front/` e `back/` mantêm a configuração de cada
 
 | Serviço | URL |
 |---------|-----|
-| Frontend | https://cafe-gourmet-front.vercel.app |
-| Backend (API) | https://cafe-gourmet-back.vercel.app |
+| Frontend | https://gourmet-coffee-front.vercel.app |
+| Backend (API) | https://gourmet-coffee-back.vercel.app |
 
 ## ⚙️ Workflows (GitHub Actions)
 
@@ -231,7 +231,7 @@ Os workflows de deploy requerem os seguintes secrets configurados no repositóri
 
 ## 🔌 Rotas da API
 
-A base da API em produção é `https://cafe-gourmet-back.vercel.app/api`.
+A base da API em produção é `https://gourmet-coffee-back.vercel.app/api`.
 
 ### Admin
 | Método | Rota | Auth | Descrição |
