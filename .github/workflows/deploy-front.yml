@@ -73,7 +73,7 @@ jobs:
         run: npx vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Build project
-        run: npx vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: npx vercel build --prod --token=${{ secrets.VERCEL_TOKEN }} --no-install
 
       - name: Deploy (prebuilt)
         run: npx vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
