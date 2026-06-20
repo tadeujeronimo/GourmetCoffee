@@ -66,3 +66,4 @@ jobs:
           target: production
           github-deployment-environment: production
           github-deployment: true
+          working-directory: ./front
