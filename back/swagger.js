@@ -8,12 +8,12 @@ const doc = {
   },
   servers: [
     {
-      url: 'http://localhost:4000/api',
-      description: 'Development Server',
-    },
-    {
       url: 'https://gourmet-coffee-back.vercel.app/api',
       description: 'Production Server',
+    },
+    {
+      url: 'http://localhost:4000/api',
+      description: 'Development Server',
     },
   ],
   tags: [
