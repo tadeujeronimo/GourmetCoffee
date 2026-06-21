@@ -11,22 +11,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.get('/', (req, res) => {
-  res.send(`
-    <!DOCTYPE html>
-    <html lang="pt-BR">
-    <head>
-      <meta charset="UTF-8">
-      <title>Café Gourmet API</title>
-    </head>
-    <body>
-      <h1>☕ Café Gourmet API</h1>
-      <p><a href="/api">API</a></p>
-      <p><a href="/api-docs">Documentação (Swagger)</a></p>
-    </body>
-    </html>
-  `);
-});
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/api', (req, res) => {
   res.json({
