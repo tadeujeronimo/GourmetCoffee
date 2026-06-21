@@ -17,23 +17,20 @@ const doc = {
     },
   ],
   tags: [
-    {
-      name: 'Cardápio',
-      description: 'Endpoints do cardápio',
-    },
-    {
-      name: 'Pedidos',
-      description: 'Endpoints de pedidos',
-    },
-    {
-      name: 'Admin',
-      description: 'Endpoints administrativos',
-    },
-    {
-      name: 'Dashboard',
-      description: 'Endpoints do dashboard',
-    },
+    { name: 'Cardápio', description: 'Endpoints do cardápio' },
+    { name: 'Pedidos', description: 'Endpoints de pedidos' },
+    { name: 'Admin', description: 'Endpoints administrativos' },
+    { name: 'Dashboard', description: 'Endpoints do dashboard (requer autenticação)' },
   ],
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+    },
+  },
 };
 
 const routes = [

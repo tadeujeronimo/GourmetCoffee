@@ -39,11 +39,7 @@ jobs:
   deploy:
     name: Deploy Frontend to Vercel
     runs-on: ubuntu-latest
-    needs: test
-
-    permissions:
-      contents: read
-      deployments: write
+    needs: test # só faz deploy se os testes passarem
 
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
