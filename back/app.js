@@ -12,10 +12,33 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/', (req, res) => {
-  res.json({ 
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+      <meta charset="UTF-8">
+      <title>Café Gourmet API</title>
+    </head>
+    <body>
+      <h1>☕ Café Gourmet API</h1>
+      <p><a href="/api">API</a></p>
+      <p><a href="/api-docs">Documentação (Swagger)</a></p>
+    </body>
+    </html>
+  `);
+});
+
+app.get('/api', (req, res) => {
+  res.json({
     status: 'ok',
-    message: 'Gourmet Coffee API',
-    docs: '/api-docs'
+    message: 'Café Gourmet API v1.1.0',
+    endpoints: {
+      cardapio: '/api/cardapio',
+      pedidos: '/api/pedidos',
+      admin: '/api/admin/login',
+      dashboard: '/api/dashboard',
+    },
+    docs: '/api-docs',
   });
 });
 

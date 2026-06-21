@@ -4,7 +4,7 @@ const doc = {
   info: {
     title: 'Café Gourmet API',
     description: 'Documentação da API da Cafeteria',
-    version: '1.0.0',
+    version: '1.1.0',
   },
   servers: [
     {
